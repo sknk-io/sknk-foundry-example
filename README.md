@@ -11,16 +11,16 @@
 
 This repo is for a Solidity / Foundry developer who wants to integrate a game contract with the SKNK protocol.
 
-The main thing you should take from this repo is the contract integration pattern in [src/DemoGame.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/DemoGame.sol) and [src/SLPConsumerBase.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/SLPConsumerBase.sol). Everything else exists to make that pattern easy to inspect, test, and adapt.
+The main thing you should take from this repo is the contract integration pattern in [src/DemoGame.sol](src/DemoGame.sol) and [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol). Everything else exists to make that pattern easy to inspect, test, and adapt.
 
 ## Start Here
 
 Read these files in this order:
 
-1. [src/DemoGame.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/DemoGame.sol)
-2. [src/SLPConsumerBase.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/SLPConsumerBase.sol)
-3. [src/interfaces/ISLPHub.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/interfaces/ISLPHub.sol)
-4. [test/DemoGame.t.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/test/DemoGame.t.sol)
+1. [src/DemoGame.sol](src/DemoGame.sol)
+2. [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol)
+3. [src/interfaces/ISLPHub.sol](src/interfaces/ISLPHub.sol)
+4. [test/DemoGame.t.sol](test/DemoGame.t.sol)
 
 If you are evaluating how to wire your own game into SKNK, that is the whole path.
 
@@ -120,13 +120,13 @@ If you change only one thing, change the game logic around ticket creation, not 
 
 ## Repo Layout
 
-- [src/DemoGame.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/DemoGame.sol) - reference consumer contract
-- [src/SLPConsumerBase.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/SLPConsumerBase.sol) - reusable hub integration helpers
-- [src/interfaces/ISLPHub.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/interfaces/ISLPHub.sol) - expected hub interface
-- [src/interfaces/IGamesRegistry.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/src/interfaces/IGamesRegistry.sol) - optional registry interface
-- [test/DemoGame.t.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/test/DemoGame.t.sol) - behavior tests for the example contract
-- [test/mocks/MockSLPFixtures.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/test/mocks/MockSLPFixtures.sol) - mocks and harnesses used by the tests
-- [script/Deploy.s.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/script/Deploy.s.sol) - example deploy script
+- [src/DemoGame.sol](src/DemoGame.sol) - reference consumer contract
+- [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol) - reusable hub integration helpers
+- [src/interfaces/ISLPHub.sol](src/interfaces/ISLPHub.sol) - expected hub interface
+- [src/interfaces/IGamesRegistry.sol](src/interfaces/IGamesRegistry.sol) - optional registry interface
+- [test/DemoGame.t.sol](test/DemoGame.t.sol) - behavior tests for the example contract
+- [test/mocks/MockSLPFixtures.sol](test/mocks/MockSLPFixtures.sol) - mocks and harnesses used by the tests
+- [script/Deploy.s.sol](script/Deploy.s.sol) - example deploy script
 
 ## Local Setup
 
@@ -155,7 +155,7 @@ CI uses the same commands.
 
 ## Deploying The Example
 
-The deploy script in [script/Deploy.s.sol](/Users/hill399/code/@sknk/draft-sknk-starter-kit/script/Deploy.s.sol) expects:
+The deploy script in [script/Deploy.s.sol](script/Deploy.s.sol) expects:
 
 - `DEPLOYER_PRIVATE_KEY`
 - `SLP_HUB_ADDRESS`
