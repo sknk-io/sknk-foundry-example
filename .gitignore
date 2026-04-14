@@ -1,0 +1,4 @@
+# Foundry ignores
+cache
+dependencies
+out
