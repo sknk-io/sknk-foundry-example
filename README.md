@@ -11,9 +11,9 @@
 
 This repo is for a Solidity / Foundry developer who wants to integrate a game contract with the SKNK protocol.
 
-The main thing you should take from this repo is the contract integration pattern in [src/DemoGame.sol](src/DemoGame.sol) and [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol). Everything else exists to make that pattern easy to inspect, test, and adapt.
+This repo centers on the contract integration pattern in [src/DemoGame.sol](src/DemoGame.sol) and [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol). Everything else keeps that pattern small enough to inspect, test, and adapt.
 
-## Start Here
+## Start here
 
 Read these files in this order:
 
@@ -22,29 +22,9 @@ Read these files in this order:
 3. [src/interfaces/ISLPHub.sol](src/interfaces/ISLPHub.sol)
 4. [test/DemoGame.t.sol](test/DemoGame.t.sol)
 
-If you are evaluating how to wire your own game into SKNK, that is the whole path.
+If you are evaluating how to wire your own game into SKNK, those files cover the contract integration path.
 
-## What To Reuse
-
-In most cases you should:
-
-- inherit `SLPConsumerBase`
-- copy the core `play`, `playWithETH`, and `withdraw` flow from `DemoGame`
-- replace `DemoGame` with your own game-specific contract and events
-- keep the hub-facing sequence the same unless your protocol assumptions differ
-
-You do not need to keep the example role model, registry helper, or exact event names unless they fit your game.
-
-## What This Repo Is Not
-
-- not a frontend example
-- not a monorepo starter kit
-- not a production-ready game contract
-- not an opinionated game framework
-
-It is a narrow contract reference repo for consumers of the SLP protocol.
-
-## Contract Integration Pattern
+## Integration pattern
 
 The expected flow for an SLP-integrated game contract is:
 
@@ -64,7 +44,11 @@ Important model details:
 - hub balances are keyed by `(token, game contract, user)`
 - wins are credited to hub balance first, not paid directly to the user
 
-## ERC20 Play Flow
+When adapting `DemoGame`, keep `SLPConsumerBase` as the integration layer and replace the game-specific contract, events, state, and result handling. You do not need to keep the example role model, registry helper, or exact event names unless they fit your game.
+
+Change the game logic around ticket creation, not the hub interaction sequence itself.
+
+## ERC20 play flow
 
 `DemoGame.play(pair, token, stake, chance)` shows the ERC20 path:
 
@@ -76,7 +60,7 @@ Important model details:
 
 The important part is that the contract does not blindly pull the full stake if the hub already holds funds for that user.
 
-## ETH Play Flow
+## ETH play flow
 
 `DemoGame.playWithETH(pair, stake, chance)` shows the ETH path:
 
@@ -86,7 +70,7 @@ The important part is that the contract does not blindly pull the full stake if 
 
 The hub is responsible for wrapping ETH into WETH.
 
-## Withdraw Flow
+## Withdraw flow
 
 `DemoGame.withdraw(token, amount)` shows the expected withdrawal path:
 
@@ -96,7 +80,7 @@ The hub is responsible for wrapping ETH into WETH.
 
 The hub does not send funds directly to the player. Your game contract must forward them.
 
-## Optional Registry Flow
+## Optional registry flow
 
 If your game wants on-chain name registration:
 
@@ -106,19 +90,7 @@ If your game wants on-chain name registration:
 
 This is optional. It is not required for the core SLP integration flow.
 
-## Adapting `DemoGame` Into Your Contract
-
-The normal customization path is:
-
-- rename `DemoGame` to your own contract
-- keep `SLPConsumerBase` as the integration layer
-- replace the example events with your own game events
-- add your own game state and result handling around `consumerId`
-- keep withdrawals explicit and user-directed
-
-If you change only one thing, change the game logic around ticket creation, not the hub interaction sequence itself.
-
-## Repo Layout
+## Repo layout
 
 - [src/DemoGame.sol](src/DemoGame.sol) - reference consumer contract
 - [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol) - reusable hub integration helpers
@@ -128,7 +100,7 @@ If you change only one thing, change the game logic around ticket creation, not 
 - [test/mocks/MockSLPFixtures.sol](test/mocks/MockSLPFixtures.sol) - mocks and harnesses used by the tests
 - [script/Deploy.s.sol](script/Deploy.s.sol) - example deploy script
 
-## Local Setup
+## Local setup
 
 Requirements:
 
@@ -153,7 +125,7 @@ forge fmt --check
 CI uses the same commands.
 
 
-## Deploying The Example
+## Deploying the example
 
 The deploy script in [script/Deploy.s.sol](script/Deploy.s.sol) expects:
 
@@ -174,7 +146,7 @@ Deploy:
 forge script script/Deploy.s.sol:DeployScript --rpc-url <RPC_URL> --broadcast
 ```
 
-## Production Notes
+## Production notes
 
 - this repo is a reference example, not an audited system
 - use `SafeERC20` and keep approvals scoped tightly

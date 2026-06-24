@@ -2,3 +2,6 @@
 cache
 dependencies
 out
+
+# Agent ignores
+.agents
