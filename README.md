@@ -133,6 +133,8 @@ The deploy script in [script/Deploy.s.sol](script/Deploy.s.sol) expects:
 - `SLP_HUB_ADDRESS`
 - `ADMIN_ADDRESS`
 
+SKNK deployment addresses are listed at [docs.sknk.io/deployments](https://docs.sknk.io/deployments).
+
 Set up local env values:
 
 ```sh
