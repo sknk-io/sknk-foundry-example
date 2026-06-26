@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/5e020b3c-6d4e-4a1c-a15d-1d627afcdb0f"
+    src=".github/assets/sknk-logo.svg"
     alt="sknk-logo"
     width="200"
   />
@@ -40,9 +40,9 @@ The expected flow for an SLP-integrated game contract is:
 Important model details:
 
 - `consumerId` is the game-level id returned by your contract
-- the hub ticket id is separate and stored in `consumerIdToTicketId`
-- hub balances are keyed by `(token, game contract, user)`
-- wins are credited to hub balance first, not paid directly to the user
+- The hub ticket id is separate and stored in `consumerIdToTicketId`
+- Hub balances are keyed by `(token, game contract, user)`
+- Wins are credited to hub balance first, not paid directly to the user
 
 When adapting `DemoGame`, keep `SLPConsumerBase` as the integration layer and replace the game-specific contract, events, state, and result handling. You do not need to keep the example role model, registry helper, or exact event names unless they fit your game.
 
@@ -52,11 +52,11 @@ Change the game logic around ticket creation, not the hub interaction sequence i
 
 `DemoGame.play(pair, token, stake, chance)` shows the ERC20 path:
 
-- read the user's existing hub balance
-- pull only the shortfall from the wallet
-- approve the hub for that play
-- create the ticket
-- emit `GamePlayed(..., consumerId)`
+- Read the user's existing hub balance
+- Pull only the shortfall from the wallet
+- Approve the hub for that play
+- Create the ticket
+- Emit `GamePlayed(..., consumerId)`
 
 The important part is that the contract does not blindly pull the full stake if the hub already holds funds for that user.
 
@@ -64,9 +64,9 @@ The important part is that the contract does not blindly pull the full stake if 
 
 `DemoGame.playWithETH(pair, stake, chance)` shows the ETH path:
 
-- require `msg.value == stake`
-- call `_createTicketWithETH(...)`
-- emit the event using `hub.WETH_ADDRESS()` as the token address
+- Require `msg.value == stake`
+- Call `_createTicketWithETH(...)`
+- Emit the event using `hub.WETH_ADDRESS()` as the token address
 
 The hub is responsible for wrapping ETH into WETH.
 
@@ -74,9 +74,9 @@ The hub is responsible for wrapping ETH into WETH.
 
 `DemoGame.withdraw(token, amount)` shows the expected withdrawal path:
 
-1. withdraw the user balance from the hub into the game contract
-2. transfer the withdrawn tokens to the user
-3. emit a withdrawal event
+1. Withdraw the user balance from the hub into the game contract
+2. Transfer the withdrawn tokens to the user
+3. Emit a withdrawal event
 
 The hub does not send funds directly to the player. Your game contract must forward them.
 
@@ -84,21 +84,21 @@ The hub does not send funds directly to the player. Your game contract must forw
 
 If your game wants on-chain name registration:
 
-- set the registry with `_setGamesRegistry(address)`
-- set the name with `_setName(string)`
-- read the name with `_name()`
+- Set the registry with `_setGamesRegistry(address)`
+- Set the name with `_setName(string)`
+- Read the name with `_name()`
 
 This is optional. It is not required for the core SLP integration flow.
 
 ## Repo layout
 
-- [src/DemoGame.sol](src/DemoGame.sol) - reference consumer contract
-- [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol) - reusable hub integration helpers
-- [src/interfaces/ISLPHub.sol](src/interfaces/ISLPHub.sol) - expected hub interface
-- [src/interfaces/IGamesRegistry.sol](src/interfaces/IGamesRegistry.sol) - optional registry interface
-- [test/DemoGame.t.sol](test/DemoGame.t.sol) - behavior tests for the example contract
-- [test/mocks/MockSLPFixtures.sol](test/mocks/MockSLPFixtures.sol) - mocks and harnesses used by the tests
-- [script/Deploy.s.sol](script/Deploy.s.sol) - example deploy script
+- [src/DemoGame.sol](src/DemoGame.sol) - Reference consumer contract
+- [src/SLPConsumerBase.sol](src/SLPConsumerBase.sol) - Reusable hub integration helpers
+- [src/interfaces/ISLPHub.sol](src/interfaces/ISLPHub.sol) - Expected hub interface
+- [src/interfaces/IGamesRegistry.sol](src/interfaces/IGamesRegistry.sol) - Optional registry interface
+- [test/DemoGame.t.sol](test/DemoGame.t.sol) - Behavior tests for the example contract
+- [test/mocks/MockSLPFixtures.sol](test/mocks/MockSLPFixtures.sol) - Mocks and harnesses used by the tests
+- [script/Deploy.s.sol](script/Deploy.s.sol) - Example deploy script
 
 ## Local setup
 
@@ -133,6 +133,8 @@ The deploy script in [script/Deploy.s.sol](script/Deploy.s.sol) expects:
 - `SLP_HUB_ADDRESS`
 - `ADMIN_ADDRESS`
 
+SKNK deployment addresses are listed at [docs.sknk.io/deployments](https://docs.sknk.io/deployments).
+
 Set up local env values:
 
 ```sh
@@ -148,8 +150,8 @@ forge script script/Deploy.s.sol:DeployScript --rpc-url <RPC_URL> --broadcast
 
 ## Production notes
 
-- this repo is a reference example, not an audited system
-- use `SafeERC20` and keep approvals scoped tightly
-- consider `nonReentrant` on play and withdraw paths in production
-- validate cancel windows, error flows, and settlement assumptions against the actual hub you are integrating with
-- emit consistent play, result, and withdrawal events so off-chain systems can reconstruct state
+- This repo is a reference example, not an audited system
+- Use `SafeERC20` and keep approvals scoped tightly
+- Consider `nonReentrant` on play and withdraw paths in production
+- Validate cancel windows, error flows, and settlement assumptions against the actual hub you are integrating with
+- Emit consistent play, result, and withdrawal events so off-chain systems can reconstruct state
